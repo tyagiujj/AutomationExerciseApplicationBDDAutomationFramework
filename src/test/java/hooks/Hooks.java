@@ -3,6 +3,8 @@ package hooks;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -15,11 +17,17 @@ import java.io.IOException;
 
 public class Hooks {
 
+    // Logger instance - tied to this specific class (Hooks.class)
+    // so every log message automatically shows "Hooks" as its source
+    private static final Logger logger = LogManager.getLogger(Hooks.class);
+
     @Before
     public void setUp() {
         WebDriver driver = DriverManager.getDriver();
         driver.manage().window().maximize();
         driver.get(ConfigReader.get("url"));
+
+        logger.info("Browser launched and navigated to: " + ConfigReader.get("url"));
     }
 
     @After
@@ -27,18 +35,18 @@ public class Hooks {
         WebDriver driver = DriverManager.getDriver();
 
         if (scenario.isFailed()) {
-            // Capture as bytes - for future Cucumber HTML report embedding
+            logger.error("Scenario FAILED: " + scenario.getName());
+
             byte[] screenshotBytes = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
             scenario.attach(screenshotBytes, "image/png", scenario.getName());
 
-            // Also save as a file - so we can visually verify RIGHT NOW,
-            // before we build full HTML reporting later in the roadmap
             saveScreenshotToFile(driver, scenario.getName());
-
-            System.out.println("Screenshot captured for failed scenario: " + scenario.getName());
+        } else {
+            logger.info("Scenario PASSED: " + scenario.getName());
         }
 
         DriverManager.quitDriver();
+        logger.info("Browser closed.");
     }
 
     private void saveScreenshotToFile(WebDriver driver, String testName) {
@@ -47,9 +55,9 @@ public class Hooks {
             String path = System.getProperty("user.dir") + "/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png";
             File destFile = new File(path);
             FileUtils.copyFile(sourceFile, destFile);
-            System.out.println("Screenshot saved to: " + path);
+            logger.info("Screenshot saved to: " + path);
         } catch (IOException e) {
-            System.out.println("Could not save screenshot file: " + e.getMessage());
+            logger.error("Could not save screenshot file: " + e.getMessage());
         }
     }
 }

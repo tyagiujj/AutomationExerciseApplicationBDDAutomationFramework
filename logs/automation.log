@@ -1,0 +1,21 @@
+2026-08-16 01:24:27 [INFO ] ConfigReader - Config file loaded successfully.
+2026-08-16 01:24:27 [INFO ] DriverManager - Initializing browser: chrome
+2026-08-16 01:24:34 [INFO ] Hooks - Browser launched and navigated to: http://automationexercise.com
+2026-08-16 01:24:35 [INFO ] CommonSteps - Verified: Home page is displayed.
+2026-08-16 01:24:43 [INFO ] CommonSteps - Clicked Signup/Login button.
+2026-08-16 01:24:43 [INFO ] TC_01RegisterUser - Verified: New User Signup section is visible.
+2026-08-16 01:24:47 [INFO ] TC_01RegisterUser - Entered signup name: Gonzalo Cormier MD and email: harris.gleason1786823685763@example.com
+2026-08-16 01:24:49 [ERROR] Hooks - Scenario FAILED: Register a new user successfully
+2026-08-16 01:24:50 [INFO ] Hooks - Screenshot saved to: C:\Users\DELL\Documents\untitled/screenshots/Register a new user successfully_1786823690211.png
+2026-08-16 01:24:51 [INFO ] DriverManager - Driver quit successfully.
+2026-08-16 01:24:51 [INFO ] Hooks - Browser closed.
+2026-08-16 01:24:51 [INFO ] DriverManager - Initializing browser: chrome
+2026-08-16 01:24:57 [INFO ] Hooks - Browser launched and navigated to: http://automationexercise.com
+2026-08-16 01:24:59 [INFO ] CommonSteps - Verified: Home page is displayed.
+2026-08-16 01:25:03 [INFO ] CommonSteps - Clicked Signup/Login button.
+2026-08-16 01:25:03 [INFO ] TC_02LoginUserwithcorrectemailandpassword - Verified: Login to your account section is visible.
+2026-08-16 01:25:07 [INFO ] TC_02LoginUserwithcorrectemailandpassword - Entered login credentials for email: Test@62gmail.com
+2026-08-16 01:25:12 [ERROR] Hooks - Scenario FAILED: Login with correct email and password
+2026-08-16 01:25:14 [INFO ] Hooks - Screenshot saved to: C:\Users\DELL\Documents\untitled/screenshots/Login with correct email and password_1786823714755.png
+2026-08-16 01:25:16 [INFO ] DriverManager - Driver quit successfully.
+2026-08-16 01:25:16 [INFO ] Hooks - Browser closed.

@@ -65,6 +65,28 @@
             <version>2.16.1</version>
         </dependency>
 
+        <!-- Log4j2 API - defines the logging interface (Logger, LogManager classes) -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.24.1</version>
+        </dependency>
+
+        <!-- Log4j2 Core - the actual implementation that does the logging work -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.24.1</version>
+        </dependency>
+
+        <!-- SLF4J to Log4j2 bridge - routes Selenium's internal SLF4J logs
+             through Log4j2 too, fixing the "NOP logger" warning we've been seeing -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>2.24.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
