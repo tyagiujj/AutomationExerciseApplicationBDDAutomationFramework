@@ -51,6 +51,13 @@
             <version>5.9.2</version>
         </dependency>
 
+        <!-- Java Faker (DataFaker) - generates realistic random test data -->
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+
     </dependencies>
 
 </project>

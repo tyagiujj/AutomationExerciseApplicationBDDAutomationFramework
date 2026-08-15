@@ -5,16 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.time.Duration;
+
 /**
  * DriverManager class
- * ---------------------
- * Purpose: To create and manage a SINGLE WebDriver (browser) instance
- * using Singleton Design Pattern.
- *
- * WHICH browser + HOW to create/destroy it - that's this class's job.
- * (WHEN to create/destroy is decided by Hooks class)
- *
- * Now supports DYNAMIC browser selection based on config.properties.
+ * ----------------------
+ * Creates and manages a single WebDriver instance using the
+ * Singleton Design Pattern. Supports dynamic browser selection
+ * based on config.properties.
  */
 public class DriverManager {
 
@@ -23,12 +21,9 @@ public class DriverManager {
     public static WebDriver getDriver() {
         if (driver.get() == null) {
 
-            // Read browser name from config.properties (e.g. "chrome" or "firefox")
             String browserName = ConfigReader.get("browser");
-
             WebDriver newDriver;
 
-            // Decide WHICH browser to launch based on config value
             if (browserName.equalsIgnoreCase("chrome")) {
                 WebDriverManager.chromedriver().setup();
                 newDriver = new ChromeDriver();
@@ -36,9 +31,14 @@ public class DriverManager {
                 WebDriverManager.firefoxdriver().setup();
                 newDriver = new FirefoxDriver();
             } else {
-                // If someone types an unsupported browser name, fail clearly
                 throw new RuntimeException("Browser not supported: " + browserName);
             }
+
+            // Implicit wait - tells the driver to wait for elements
+            // to appear before throwing "element not found" errors.
+            // Value is read from config.properties (not hardcoded).
+            int waitTime = Integer.parseInt(ConfigReader.get("implicitWait"));
+            newDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitTime));
 
             driver.set(newDriver);
         }

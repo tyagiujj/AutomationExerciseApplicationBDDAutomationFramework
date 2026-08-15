@@ -9,22 +9,25 @@ import utils.DriverManager;
 /**
  * Hooks class
  * -------------
- * WHEN to open/close the browser - that's this class's job.
+ * Contains setup and teardown logic that runs automatically
+ * before and after EVERY Cucumber scenario.
  *
- * @Before -> runs before EVERY scenario starts
- * @After  -> runs after EVERY scenario ends
+ * @Before -> runs before each scenario starts
+ * @After  -> runs after each scenario ends
  */
 public class Hooks {
 
     @Before
     public void setUp() {
-        WebDriver driver = DriverManager.getDriver();     // asks DriverManager for browser
-        driver.manage().window().maximize();               // extra setup
-        driver.get(ConfigReader.get("url"));                // extra setup - navigate to URL
+        WebDriver driver = DriverManager.getDriver();
+        driver.manage().window().maximize();
+        driver.get(ConfigReader.get("url"));
+
+
     }
 
     @After
     public void tearDown() {
-        DriverManager.quitDriver();                         // tells DriverManager to close it
+        DriverManager.quitDriver();
     }
 }
