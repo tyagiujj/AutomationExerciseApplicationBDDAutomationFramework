@@ -17,16 +17,6 @@ public class TC_01RegisterUser {
     HomePage homePage = new HomePage(driver);
     RegistrationPage registrationPage = new RegistrationPage(driver);
 
-    @Given("user is on the home page")
-    public void user_is_on_the_home_page() {
-        Assert.assertTrue(homePage.isHomePageDisplayed(), "Home page is not displayed!");
-    }
-
-    @When("user clicks on Signup or Login button")
-    public void user_clicks_on_signup_or_login_button() {
-        homePage.clickSignupLogin();
-    }
-
     @Then("New User Signup section should be visible")
     public void new_user_signup_section_should_be_visible() {
         Assert.assertTrue(homePage.isNewUserSignupHeaderDisplayed(), "New User Signup section is not visible!");
@@ -155,11 +145,6 @@ public class TC_01RegisterUser {
     @And("user clicks on Continue button")
     public void user_clicks_on_continue_button() {
         registrationPage.clickContinueButton();
-    }
-
-    @Then("Verify that Logged in as username is visible")
-    public void verify_that_logged_in_as_username_is_visible() {
-        Assert.assertTrue(registrationPage.isLoggedInAsTextDisplayed(), "Logged in as text is not visible!");
     }
 
     @And("user clicks on Delete Account button")

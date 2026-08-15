@@ -58,6 +58,13 @@
             <version>2.4.2</version>
         </dependency>
 
+        <!-- Apache Commons IO - for easy file operations (used in screenshot saving) -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
