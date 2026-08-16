@@ -87,6 +87,15 @@
             <version>2.24.1</version>
         </dependency>
 
+        <!-- Masterthought Cucumber Reporting - generates a rich dashboard-style
+     HTML report (with pie charts for pass/fail/skipped) from the
+     cucumber.json file produced by Cucumber's own json plugin -->
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.8.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -12,7 +12,11 @@ import org.testng.annotations.Listeners;
                 "src/test/resources/features/TC_02LoginUserwithcorrectemailandpassword.feature"
         },
         glue = {"stepDefinitions", "hooks"},
-        plugin = {"pretty"},
+        plugin = {
+                "pretty",
+                "html:target/cucumber-reports/cucumber.html",
+                "json:target/cucumber-reports/cucumber.json"
+        },
         monochrome = true
 )
 @Listeners(TestListener.class)

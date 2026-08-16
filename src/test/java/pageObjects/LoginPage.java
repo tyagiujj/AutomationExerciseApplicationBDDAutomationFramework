@@ -4,12 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utils.WaitUtils;
 
 /**
  * LoginPage class
  * ------------------
- * Represents the Login form section on AutomationExercise
- * (shown on the same page as Signup, under "Login to your account").
+ * Represents the Login form section on AutomationExercise.
  * Contains locators and actions for logging in with existing credentials.
  */
 public class LoginPage {
@@ -34,18 +34,22 @@ public class LoginPage {
     }
 
     public boolean isLoginToYourAccountHeaderDisplayed() {
+        WaitUtils.waitForVisibility(driver, loginToYourAccountHeader);
         return loginToYourAccountHeader.isDisplayed();
     }
 
     public void enterLoginEmail(String email) {
+        WaitUtils.waitForVisibility(driver, loginEmailInput);
         loginEmailInput.sendKeys(email);
     }
 
     public void enterLoginPassword(String password) {
+        WaitUtils.waitForVisibility(driver, loginPasswordInput);
         loginPasswordInput.sendKeys(password);
     }
 
     public void clickLoginButton() {
+        WaitUtils.waitForClickability(driver, loginButton);
         loginButton.click();
     }
 }
