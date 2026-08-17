@@ -17,6 +17,7 @@ A BDD-driven web automation framework built from scratch for [AutomationExercise
 | Reporting | Cucumber HTML + Masterthought Pie-Chart Dashboard |
 | Test Data | Java Faker (DataFaker) |
 | Driver Management | WebDriverManager (Bonigarcia) |
+| CI/CD | GitHub Actions |
 
 ---
 
@@ -32,12 +33,31 @@ A BDD-driven web automation framework built from scratch for [AutomationExercise
 - **Structured logging** — Log4j2 writes leveled, timestamped logs to both console and file.
 - **Dynamic test data** — Java Faker generates realistic names, emails, addresses, and phone numbers; emails are guaranteed unique via a timestamp suffix.
 - **Dual reporting** — Cucumber's built-in HTML report plus a Masterthought pie-chart dashboard generated from the Cucumber JSON output.
+- **Continuous Integration** — every push and pull request to `main` automatically triggers the full test suite via GitHub Actions, running headless Chrome on a fresh Linux runner.
+
+---
+
+## CI/CD Pipeline
+
+This project uses **GitHub Actions** for Continuous Integration. The pipeline is defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+
+**What happens automatically on every push/PR to `main`:**
+1. Checks out the latest code
+2. Sets up Java 21 and Chrome on a fresh Ubuntu runner
+3. Runs the full test suite via `mvn clean test`
+4. Uploads the Cucumber HTML report and pie-chart dashboard as downloadable artifacts — even on failure
+
+The browser automatically runs in **headless mode** on CI (no visible display on the runner) while still running headed on a local machine — controlled via a `System.getenv("CI")` check in `DriverManager`, so the same codebase works correctly in both environments without any manual configuration.
+
+**Status:** The badge at the top of this README always reflects the latest run on `main` — green means the full suite is passing, red means something needs attention before merging new changes.
 
 ---
 
 ## Project structure
 
 ```
+├── .github/workflows/
+│   └── ci.yml               # GitHub Actions CI pipeline
 ├── pom.xml
 ├── testng.xml
 ├── src/test/java/
@@ -66,6 +86,7 @@ A BDD-driven web automation framework built from scratch for [AutomationExercise
 - **Single Responsibility Principle** — each utility class does exactly one job (config reading, driver management, waiting, logging).
 - **DRY** — shared logic (JS clicks, waits, common steps) centralized rather than duplicated.
 - **Fail-Fast** — configuration and driver errors throw immediately with clear messages instead of failing silently downstream.
+- **Environment-Aware Configuration** — the same codebase automatically adapts between local (headed browser) and CI (headless browser) execution.
 
 ---
 
@@ -79,8 +100,8 @@ A BDD-driven web automation framework built from scratch for [AutomationExercise
 ### Setup
 
 ```bash
-git clone https://github.com/tyagiujjj/AutomationExerciseApplicationBDD.git
-cd AutomationExerciseApplicationBDD
+git clone https://github.com/tyagiujj/AutomationExerciseApplicationBDDAutomationFramework.git
+cd AutomationExerciseApplicationBDDAutomationFramework
 ```
 
 Update `src/test/resources/config.properties` with your own values:
@@ -109,12 +130,15 @@ After a run completes:
 - `target/cucumber-pie-report/cucumber-html-reports/overview-features.html` — pie-chart dashboard
 - `logs/automation.log` — full execution log
 
+Reports from CI runs can also be downloaded directly from the **Actions** tab on GitHub, under each workflow run's Artifacts section.
+
 ---
 
 ## Test cases automated so far
 
 - User registration (full form: personal details, address, checkboxes, account creation and deletion)
 - User login with valid credentials
+- User login with invalid credentials (negative test)
 
 More scenarios from the AutomationExercise test suite are actively being added following the same Page Object + BDD pattern.
 
@@ -122,10 +146,11 @@ More scenarios from the AutomationExercise test suite are actively being added f
 
 ## Roadmap
 
+- [x] CI/CD pipeline (GitHub Actions)
 - [ ] Data-driven testing with Cucumber Scenario Outline
 - [ ] Excel/JSON-based external test data
 - [ ] ExtentReports integration
-- [ ] CI/CD pipeline (GitHub Actions)
+- [ ] Branch protection rules requiring CI to pass before merge
 
 ---
 
@@ -134,4 +159,4 @@ More scenarios from the AutomationExercise test suite are actively being added f
 **Ujjwal Tyagi**
 QA Engineer | Automation & Manual Testing
 
-[LinkedIn](www.linkedin.com/in/ujjwal-tyagi21) · [GitHub](https://github.com/tyagiujj)
+[LinkedIn](https://www.linkedin.com/in/ujjwal-tyagi21) · [GitHub](https://github.com/tyagiujj)
