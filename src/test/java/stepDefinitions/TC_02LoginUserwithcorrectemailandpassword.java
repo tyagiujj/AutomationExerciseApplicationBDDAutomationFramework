@@ -34,11 +34,4 @@ public class TC_02LoginUserwithcorrectemailandpassword {
         loginPage.enterLoginEmail(email);
         loginPage.enterLoginPassword(password);
         logger.info("Entered login credentials for email: " + email);
-    }
-
-    @And("user clicks on Login button")
-    public void user_clicks_on_login_button() {
-        loginPage.clickLoginButton();
-        logger.info("Clicked Login button.");
-    }
-}
+    }}

@@ -9,7 +9,8 @@ import org.testng.annotations.Listeners;
 @CucumberOptions(
         features = {
                 "src/test/resources/features/RegisterUser.feature",
-                "src/test/resources/features/TC_02LoginUserwithcorrectemailandpassword.feature"
+                "src/test/resources/features/TC_02LoginUserwithcorrectemailandpassword.feature",
+                "src/test/resources/features/TC_03LoginUserwithincorrectemailandpassword.feature"
         },
         glue = {"stepDefinitions", "hooks"},
         plugin = {
