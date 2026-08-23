@@ -10,7 +10,8 @@ import org.testng.annotations.Listeners;
         features = {
                 "src/test/resources/features/RegisterUser.feature",
                 "src/test/resources/features/TC_02LoginUserwithcorrectemailandpassword.feature",
-                "src/test/resources/features/TC_03LoginUserwithincorrectemailandpassword.feature"
+                "src/test/resources/features/TC_03LoginUserwithincorrectemailandpassword.feature",
+                "src/test/resources/features/TC_04LogoutUser.feature"
         },
         glue = {"stepDefinitions", "hooks"},
         plugin = {
