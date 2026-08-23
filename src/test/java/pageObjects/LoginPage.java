@@ -31,6 +31,9 @@ public class LoginPage {
     @FindBy(xpath = "//p[normalize-space()='Your email or password is incorrect!']")
     WebElement incorrectEmailAndPasswordMessage;
 
+    @FindBy(xpath="//a[normalize-space()='Logout']")
+    WebElement logoutButton;
+
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -58,4 +61,9 @@ public class LoginPage {
     public boolean isInvalidEmailAndPasswordMessageDisplayed() {
         WaitUtils.waitForVisibility(driver, incorrectEmailAndPasswordMessage);
         return incorrectEmailAndPasswordMessage.isDisplayed();
-    }}
+    }
+    public void clickLogoutButton(){
+        WaitUtils.waitForClickability(driver, logoutButton);
+        logoutButton.click();
+    }
+}
