@@ -96,6 +96,9 @@ public class RegistrationPage {
     @FindBy(xpath = "//b[normalize-space()='Account Deleted!']")
     WebElement accountDeletedHeader;
 
+    @FindBy(xpath="//p[normalize-space()='Email Address already exist!']")
+    WebElement emailExistsError;
+
     public RegistrationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -228,5 +231,9 @@ public class RegistrationPage {
     public boolean isAccountDeletedHeaderDisplayed() {
         WaitUtils.waitForVisibility(driver, accountDeletedHeader);
         return accountDeletedHeader.isDisplayed();
+    }
+    public boolean isEmailExistsErrorDisplayed(){
+        WaitUtils.waitForVisibility(driver, emailExistsError);
+        return emailExistsError.isDisplayed();
     }
 }
