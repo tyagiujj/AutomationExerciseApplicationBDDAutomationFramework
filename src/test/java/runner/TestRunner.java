@@ -12,7 +12,8 @@ import org.testng.annotations.Listeners;
                 "src/test/resources/features/TC_02LoginUserwithcorrectemailandpassword.feature",
                 "src/test/resources/features/TC_03LoginUserwithincorrectemailandpassword.feature",
                 "src/test/resources/features/TC_04LogoutUser.feature",
-                "src/test/resources/features/TC_05RegisterUserwithexistingemail.feature"
+                "src/test/resources/features/TC_05RegisterUserwithexistingemail.feature",
+                "src/test/resources/features/TC_06ContactUsForm.feature"
         },
         glue = {"stepDefinitions", "hooks"},
         plugin = {
