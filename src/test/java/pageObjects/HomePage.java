@@ -28,6 +28,12 @@ public class HomePage {
     @FindBy(xpath = "//button[normalize-space()='Signup']")
     WebElement signupButton;
 
+    @FindBy(xpath="//a[contains(text(),'Test Cases')]")
+    WebElement testCasesLink;
+
+    @FindBy(xpath="//b[normalize-space()='Test Cases']")
+    WebElement testCasesText;
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -62,4 +68,11 @@ public class HomePage {
         WaitUtils.waitForClickability(driver, signupButton);
         signupButton.click();
     }
-}
+    public void clickTestCasesLink(){
+        WaitUtils.waitForClickability(driver, testCasesLink);
+        testCasesLink.click();
+    }
+    public boolean isTestCasesTextDisplayed(){
+        WaitUtils.waitForVisibility(driver, testCasesText);
+        return testCasesText.isDisplayed();
+    }}
