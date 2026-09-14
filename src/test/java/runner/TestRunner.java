@@ -8,13 +8,14 @@ import org.testng.annotations.Listeners;
 
 @CucumberOptions(
         features = {
-                "src/test/resources/features/RegisterUser.feature",
-                "src/test/resources/features/TC_02LoginUserwithcorrectemailandpassword.feature",
-                "src/test/resources/features/TC_03LoginUserwithincorrectemailandpassword.feature",
-                "src/test/resources/features/TC_04LogoutUser.feature",
-                "src/test/resources/features/TC_05RegisterUserwithexistingemail.feature",
-                "src/test/resources/features/TC_06ContactUsForm.feature",
-                "src/test/resources/features/TC_07VerifyTestCasesPage.feature"
+//                "src/test/resources/features/RegisterUser.feature",
+//                "src/test/resources/features/TC_02LoginUserwithcorrectemailandpassword.feature",
+//                "src/test/resources/features/TC_03LoginUserwithincorrectemailandpassword.feature",
+//                "src/test/resources/features/TC_04LogoutUser.feature",
+//                "src/test/resources/features/TC_05RegisterUserwithexistingemail.feature",
+//                "src/test/resources/features/TC_06ContactUsForm.feature",
+//                "src/test/resources/features/TC_07VerifyTestCasesPage.feature",
+                "src/test/resources/features/TC_08NegativeLogin.feature"
         },
         glue = {"stepDefinitions", "hooks"},
         plugin = {

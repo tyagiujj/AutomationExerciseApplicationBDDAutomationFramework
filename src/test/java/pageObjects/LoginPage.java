@@ -56,7 +56,13 @@ public class LoginPage {
 
     public void clickLoginButton() {
         WaitUtils.waitForClickability(driver, loginButton);
-        loginButton.click();
+        try {
+            loginButton.click();
+        } catch (org.openqa.selenium.ElementClickInterceptedException e) {
+            // Fallback: JS click bypasses overlapping ad-iframe
+            ((org.openqa.selenium.JavascriptExecutor) driver)
+                    .executeScript("arguments[0].click();", loginButton);
+        }
     }
     public boolean isInvalidEmailAndPasswordMessageDisplayed() {
         WaitUtils.waitForVisibility(driver, incorrectEmailAndPasswordMessage);
