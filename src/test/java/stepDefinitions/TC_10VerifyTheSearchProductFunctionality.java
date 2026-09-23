@@ -12,7 +12,7 @@ public class TC_10VerifyTheSearchProductFunctionality {
     WebDriver driver= DriverManager.getDriver();
     ProductPage productPage =new ProductPage(driver);
 
-    @When("When Enter product name in search input and click search button")
+    @When("Enter product name in search input and click search button")
     public void enter_product_name_in_search_input_and_click_search_button() {
         productPage.searchProduct("Blue Top");
         productPage.clickSubmitSearchButton();
