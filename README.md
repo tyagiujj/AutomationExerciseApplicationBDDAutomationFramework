@@ -1,162 +1,215 @@
-# Selenium + Cucumber + TestNG Automation Framework
+# Selenium Cucumber TestNG Automation Framework
 
-A BDD-driven web automation framework built from scratch for [AutomationExercise.com](https://automationexercise.com), designed around scalability, maintainability, and real-world reliability rather than just passing a handful of demo tests.
+[![Selenium Automation CI](https://github.com/tyagiujj/AutomationExerciseApplicationBDDAutomationFramework/actions/workflows/ci.yml/badge.svg)](https://github.com/tyagiujj/AutomationExerciseApplicationBDDAutomationFramework/actions/workflows/ci.yml)
 
----
+A scalable BDD web automation framework built for [AutomationExercise.com](https://automationexercise.com). The project demonstrates practical test automation engineering using Selenium WebDriver, Cucumber, TestNG, Maven, Page Object Model, reporting, logging, parallel execution, and CI integration.
 
-## Tech stack
+This framework is designed to keep test scenarios readable, page interactions reusable, and execution reliable across local and CI environments.
 
-| Category | Tools |
-|---|---|
+## Tech Stack
+
+| Area | Tools / Libraries |
+| --- | --- |
 | Language | Java 21 |
-| Automation | Selenium WebDriver 4.x |
-| BDD | Cucumber (Gherkin) |
+| Automation | Selenium WebDriver 4 |
+| BDD | Cucumber / Gherkin |
 | Test Runner | TestNG |
 | Build Tool | Maven |
+| Design Pattern | Page Object Model |
+| Driver Management | WebDriverManager |
+| Test Data | DataFaker |
 | Logging | Log4j2 |
-| Reporting | Cucumber HTML + Masterthought Pie-Chart Dashboard |
-| Test Data | Java Faker (DataFaker) |
-| Driver Management | WebDriverManager (Bonigarcia) |
+| Reporting | Cucumber HTML, Cucumber JSON, Masterthought Cucumber Reporting |
 | CI/CD | GitHub Actions |
 
----
+## Key Highlights
 
-## Key features
+- Page Object Model implementation for clean separation between test steps and page-level actions.
+- Cucumber BDD feature files written in Given-When-Then format for better readability.
+- TestNG runner with parallel scenario execution using `@DataProvider(parallel = true)`.
+- Thread-safe WebDriver handling through `ThreadLocal`.
+- Config-driven execution using `config.properties` for browser, URL, credentials, and wait settings.
+- Centralized explicit wait utility for reusable synchronization.
+- Automatic browser driver setup through WebDriverManager.
+- Dynamic test data generation using DataFaker.
+- Screenshot capture on scenario failure, attached to Cucumber reports and saved locally.
+- Structured Log4j2 logging for console and file-based execution logs.
+- HTML and dashboard-style reporting generated after every test run.
+- GitHub Actions workflow for automated CI execution on push and pull request events.
 
-- **Page Object Model (POM)** — every page has a dedicated class with its own locators and actions, keeping step definitions clean and UI changes isolated to a single file.
-- **Singleton + ThreadLocal WebDriver management** — one driver instance per thread, making the framework safe for parallel execution without race conditions.
-- **Config-driven execution** — URL, browser choice, credentials, and wait durations all live in `config.properties`; nothing is hardcoded.
-- **Parallel execution** — Cucumber scenarios run concurrently via `@DataProvider(parallel = true)`, controlled through `testng.xml`.
-- **Centralized wait strategy** — a `WaitUtils` class wraps Explicit Waits (visibility, clickability) so Page Objects never repeat wait logic.
-- **Robust click handling** — `JavascriptExecutor`-based clicks bypass ad-overlay and dynamic-content click interception issues.
-- **Automatic screenshot on failure** — captured via Cucumber's `Scenario` object inside `Hooks`, attached to the report and saved to disk.
-- **Structured logging** — Log4j2 writes leveled, timestamped logs to both console and file.
-- **Dynamic test data** — Java Faker generates realistic names, emails, addresses, and phone numbers; emails are guaranteed unique via a timestamp suffix.
-- **Dual reporting** — Cucumber's built-in HTML report plus a Masterthought pie-chart dashboard generated from the Cucumber JSON output.
-- **Continuous Integration** — every push and pull request to `main` automatically triggers the full test suite via GitHub Actions, running headless Chrome on a fresh Linux runner.
+## Project Structure
 
----
-
-## CI/CD Pipeline
-
-This project uses **GitHub Actions** for Continuous Integration. The pipeline is defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
-
-**What happens automatically on every push/PR to `main`:**
-1. Checks out the latest code
-2. Sets up Java 21 and Chrome on a fresh Ubuntu runner
-3. Runs the full test suite via `mvn clean test`
-4. Uploads the Cucumber HTML report and pie-chart dashboard as downloadable artifacts — even on failure
-
-The browser automatically runs in **headless mode** on CI (no visible display on the runner) while still running headed on a local machine — controlled via a `System.getenv("CI")` check in `DriverManager`, so the same codebase works correctly in both environments without any manual configuration.
-
-**Status:** The badge at the top of this README always reflects the latest run on `main` — green means the full suite is passing, red means something needs attention before merging new changes.
-
----
-
-## Project structure
-
-```
-├── .github/workflows/
-│   └── ci.yml               # GitHub Actions CI pipeline
-├── pom.xml
-├── testng.xml
-├── src/test/java/
-│   ├── pageObjects/        # One class per web page
-│   ├── stepDefinitions/    # Gherkin step implementations
-│   ├── hooks/              # Setup, teardown, screenshot-on-failure
-│   ├── runner/             # Cucumber-TestNG entry point
-│   ├── listeners/          # TestNG lifecycle listener, report generation
-│   └── utils/              # ConfigReader, DriverManager, WaitUtils, TestDataGenerator
-├── src/test/resources/
-│   ├── features/           # Gherkin .feature files
-│   ├── config.properties   # Environment configuration
-│   └── log4j2.xml          # Logging configuration
-└── target/
-    ├── cucumber-reports/   # HTML + JSON reports
-    └── cucumber-pie-report/# Pie-chart dashboard report
+```text
+.
++-- .github/workflows/
+|   +-- ci.yml
++-- pom.xml
++-- testng.xml
++-- src/test/java/
+|   +-- hooks/
+|   |   +-- Hooks.java
+|   +-- listeners/
+|   |   +-- TestListener.java
+|   +-- pageObjects/
+|   |   +-- ContactUsFormPage.java
+|   |   +-- HomePage.java
+|   |   +-- LoginPage.java
+|   |   +-- ProductPage.java
+|   |   +-- RegistrationPage.java
+|   +-- runner/
+|   |   +-- TestRunner.java
+|   +-- stepDefinitions/
+|   |   +-- Step definition classes
+|   +-- utils/
+|       +-- ConfigReader.java
+|       +-- DriverManager.java
+|       +-- TestDataGenerator.java
+|       +-- WaitUtils.java
++-- src/test/resources/
+    +-- config.properties
+    +-- features/
+    |   +-- Cucumber feature files
+    +-- log4j2.xml
 ```
 
----
+## Automated Test Coverage
 
-## Design patterns and principles
+The framework currently covers the following AutomationExercise workflows:
 
-- **Singleton Pattern** — `DriverManager` ensures a single, controlled WebDriver lifecycle.
-- **Page Object Model** — UI structure abstracted away from test logic.
-- **Observer Pattern** — `TestListener` reacts to TestNG lifecycle events.
-- **Single Responsibility Principle** — each utility class does exactly one job (config reading, driver management, waiting, logging).
-- **DRY** — shared logic (JS clicks, waits, common steps) centralized rather than duplicated.
-- **Fail-Fast** — configuration and driver errors throw immediately with clear messages instead of failing silently downstream.
-- **Environment-Aware Configuration** — the same codebase automatically adapts between local (headed browser) and CI (headless browser) execution.
+- User registration with dynamic test data
+- Login with valid credentials
+- Login with invalid credentials
+- User logout
+- Registration attempt with an existing email address
+- Contact Us form submission
+- Test Cases page verification
+- Negative login validation
+- Products page and product detail page verification
+- Product search functionality
 
----
+## Framework Design
 
-## Getting started
+### Page Object Model
+
+Each page has a dedicated class inside `pageObjects`. Locators and page actions are maintained in one place, making tests easier to read and reducing maintenance when UI changes occur.
+
+### BDD With Cucumber
+
+Feature files are stored under `src/test/resources/features`. Step definitions map business-readable Gherkin steps to Java automation logic.
+
+### Driver Management
+
+`DriverManager` creates browser instances using WebDriverManager and stores them in `ThreadLocal`, which supports parallel execution safely. Chrome and Firefox are supported through the browser value in `config.properties`.
+
+### Hooks
+
+`Hooks` manages setup and teardown before and after each scenario. On failure, it captures screenshots, attaches them to the Cucumber report, and saves them in the `screenshots` directory.
+
+### Reporting
+
+The framework generates:
+
+- Cucumber HTML report
+- Cucumber JSON report
+- Masterthought dashboard report with visual execution summary
+- Log4j2 execution logs
+
+## CI/CD
+
+GitHub Actions runs the automation suite automatically on:
+
+- Push to `main`
+- Pull request to `main`
+
+The CI workflow:
+
+1. Checks out the repository.
+2. Sets up JDK 21.
+3. Sets up Chrome.
+4. Runs `mvn clean test`.
+5. Uploads Cucumber and dashboard reports as workflow artifacts.
+
+In CI, the browser runs in headless mode automatically using the `CI` environment variable check inside `DriverManager`.
+
+## Getting Started
 
 ### Prerequisites
+
 - Java 21
 - Maven
-- Chrome or Firefox installed
+- Chrome or Firefox
+- Git
 
-### Setup
+### Clone The Repository
 
 ```bash
 git clone https://github.com/tyagiujj/AutomationExerciseApplicationBDDAutomationFramework.git
 cd AutomationExerciseApplicationBDDAutomationFramework
 ```
 
-Update `src/test/resources/config.properties` with your own values:
+### Configure Test Execution
+
+Update `src/test/resources/config.properties` as needed:
 
 ```properties
 url=http://automationexercise.com
 browser=chrome
+loginemail=your-email@example.com
+loginpassword=your-password
 implicitWait=10
 explicitWait=15
 ```
 
-> Note: credential-based test cases (e.g. login) expect a pre-registered test account's email/password in this file — replace with your own before running.
+Use a valid registered account for login-based scenarios.
 
-### Run the tests
+### Run Tests
 
 ```bash
 mvn clean test
 ```
 
-Or run `testng.xml` directly from your IDE for parallel execution.
+You can also run `testng.xml` directly from an IDE such as IntelliJ IDEA or Eclipse.
 
-### View reports
+## Reports And Logs
 
-After a run completes:
-- `target/cucumber-reports/cucumber.html` — standard Cucumber report
-- `target/cucumber-pie-report/cucumber-html-reports/overview-features.html` — pie-chart dashboard
-- `logs/automation.log` — full execution log
+After execution, reports and logs are available at:
 
-Reports from CI runs can also be downloaded directly from the **Actions** tab on GitHub, under each workflow run's Artifacts section.
+| Output | Path |
+| --- | --- |
+| Cucumber HTML Report | `target/cucumber-reports/cucumber.html` |
+| Cucumber JSON Report | `target/cucumber-reports/cucumber.json` |
+| Dashboard Report | `target/cucumber-pie-report/cucumber-html-reports/overview-features.html` |
+| Execution Logs | `logs/automation.log` |
+| Failure Screenshots | `screenshots/` |
 
----
+CI reports are also available from the GitHub Actions run artifacts.
 
-## Test cases automated so far
+## Maven Dependencies
 
-- User registration (full form: personal details, address, checkboxes, account creation and deletion)
-- User login with valid credentials
-- User login with invalid credentials (negative test)
+Major dependencies used in this project:
 
-More scenarios from the AutomationExercise test suite are actively being added following the same Page Object + BDD pattern.
+- Selenium Java
+- TestNG
+- Cucumber Java
+- Cucumber TestNG
+- WebDriverManager
+- DataFaker
+- Apache Commons IO
+- Log4j2
+- Masterthought Cucumber Reporting
 
----
+## Future Enhancements
 
-## Roadmap
-
-- [x] CI/CD pipeline (GitHub Actions)
-- [ ] Data-driven testing with Cucumber Scenario Outline
-- [ ] Excel/JSON-based external test data
-- [ ] ExtentReports integration
-- [ ] Branch protection rules requiring CI to pass before merge
-
----
+- Add more AutomationExercise end-to-end scenarios.
+- Add data-driven execution using Cucumber Scenario Outline.
+- Support external JSON or Excel-based test data.
+- Add retry logic for flaky UI interactions.
+- Add tag-based execution profiles for smoke, regression, and sanity suites.
+- Strengthen CI with branch protection and required checks.
 
 ## Author
 
-**Ujjwal Tyagi**
-QA Engineer | Automation & Manual Testing
+**Ujjwal Tyagi**  
+QA Engineer | Automation Testing | Manual Testing
 
-[LinkedIn](https://www.linkedin.com/in/ujjwal-tyagi21) · [GitHub](https://github.com/tyagiujj)
+[LinkedIn](https://www.linkedin.com/in/ujjwal-tyagi21) | [GitHub](https://github.com/tyagiujj)
