@@ -23,6 +23,12 @@ public class ProductPage {
     @FindBy(xpath="//a[@href='/product_details/1']")
     WebElement firstProductLink;
 
+   @FindBy(id="search_product")
+    WebElement searchProductInput;
+
+   @FindBy(id="submit_search")
+   WebElement submitSearchButton;
+
     public ProductPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -52,4 +58,12 @@ public class ProductPage {
         WaitUtils.waitForClickability(driver , firstProductLink);
         firstProductLink.click();
     }
-}
+    public void searchProduct(String productName){
+        WaitUtils.waitForVisibility(driver , searchProductInput);
+        searchProductInput.clear();
+        searchProductInput.sendKeys(productName);
+    }
+    public void clickSubmitSearchButton(){
+        WaitUtils.waitForClickability(driver , submitSearchButton);
+        submitSearchButton.click();
+    }}
